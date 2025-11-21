@@ -1,4 +1,4 @@
-const express = require('express');//we cant use import, cause we arent in react and in node.js we do it like this 
+const express = require('express');
 const socketio = require('socket.io');
 const cors = require('cors');
 const http = require('http');
@@ -13,7 +13,7 @@ const io = socketio(server, {cors: {
 }});
 app.use(cors());
 
-io.on('connection', (socket)=>{ //registen client joining and client leaving, we are managing this particular socket that just connected
+io.on('connection', (socket)=>{ 
     console.log("new");
 
     socket.on('join', ({name ,room}, callback) => {
@@ -22,7 +22,7 @@ io.on('connection', (socket)=>{ //registen client joining and client leaving, we
         
         if(error) return callback(error);
 
-        socket.emit('message', {user: 'admin', text:`${user.name}, welcome to the room ${user.room}`});//emitted the event from backend to front end
+        socket.emit('message', {user: 'admin', text:`${user.name}, welcome to the room ${user.room}`});
         socket.broadcast.to(user.room).emit('message',{user:'admin', text:`${user.name}, has joined`});
 
 
@@ -38,11 +38,7 @@ io.on('connection', (socket)=>{ //registen client joining and client leaving, we
 
         io.to(user?.room).emit('message', {user: user.name, text: message});
         callback();
-    })// we are expecting an event from the front end
-
-    // return () => {
-    //     socket.emit();
-    // }
+    })
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id);

@@ -22,15 +22,12 @@ const Chat = () => {
   
 
   useEffect(()=>{
-    const {name, room} = queryString.parse(location.search);// location.search gives us the search parameters which are name=""&room=""
-    // queryString.parse gives us the object of name and room 
+    const {name, room} = queryString.parse(location.search);
     socket = io(ENDPOINT);
     setName(name);
     setRoom(room);
-    socket.emit('join', {name,room},() => {});//1st argument = a string that backend recognises
-    //2nd argument = it passes an object as its payload, we can receive this data in the backend and perform actions
+    socket.emit('join', {name,room},() => {});
     return () => {
-      // socket.emit('disconnect');
       socket.disconnect();
       socket.off();
     }
@@ -63,7 +60,6 @@ const Chat = () => {
         <InfoBar room={room} />
         <Messages name={name} messages={messages}/>
         <Input room={room} sendMessage={sendMessage} setMessage={setMessage} message={message} />
-        {/* <input value={message} onKeyPress={e => e.key === 'Enter' ? sendMessage(e): null} onChange={(e) => setMessage(e.target.value)} /> */}
       </div>
       <TextContainer users = {users}/>
     </div>

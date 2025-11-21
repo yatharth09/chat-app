@@ -18,10 +18,10 @@ const Message = ({message, name}) => {
 
     ):(
       <div className='messageContainer justifyStart'>
+        <p className='sentText pl-10'>{message.user}</p>
           <div className='messageBox backgroundLight'>
             <p className='messageText colorDark'>{message.text}</p>
           </div>
-        <p className='sentText pl-10'>{message.user}</p>
 
       </div>
     )
